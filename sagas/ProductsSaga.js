@@ -1,7 +1,6 @@
-//Wildcard import
 import * as actionCreators from "../actions/ProductsAction";
 import { GET_PRODUCTS } from "../actionTypes/ProductsType";
-//Declarative Effects from redux-saga/effects
+// Declarative Effects from redux-saga/effects
 import { put, takeLatest } from "redux-saga/effects";
 
 /*
@@ -12,9 +11,8 @@ npm install
 npm start
 */
 
-let URI = "http://localhost:4000";
+const URI = "http://localhost:4000";
 
-//generator functions
 function* getProducts(action) {
   let products = yield fetch(
     `${URI}/products?_page=${action.page}&_limit=${action.limit}`
@@ -23,7 +21,7 @@ function* getProducts(action) {
 }
 
 export function* productWatchers() {
-  /*takeLatest doesn't allow multiple Saga tasks to be fired concurrently. 
-  As soon as it gets a new dispatched action, it cancels any previously-forked task (if still running).*/
+  /* takeLatest doesn't allow multiple Saga tasks to be fired concurrently. 
+  As soon as it gets a new dispatched action, it cancels any previously-forked task (if still running). */
   yield takeLatest(GET_PRODUCTS, getProducts);
 }
